@@ -34,14 +34,14 @@ export class ReceiversController {
 
   @Get(':id')
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-read`] })
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: number) {
     return await this.receiversService.findOne(+id);
   }
 
   @Patch(':id')
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-update`] })
   async update(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateReceiverDto: UpdateReceiverDto,
   ) {
     return await this.receiversService.update(+id, updateReceiverDto);
@@ -49,7 +49,7 @@ export class ReceiversController {
 
   @Delete(':id')
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-delete`] })
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: number) {
     return await this.receiversService.remove(+id);
   }
 }
