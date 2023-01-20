@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { ReceiversService } from './receivers.service';
 import { CreateReceiverDto } from './dto/create-receiver.dto';
@@ -35,21 +36,21 @@ export class ReceiversController {
   @Get(':id')
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-read`] })
   async findOne(@Param('id') id: number) {
-    return await this.receiversService.findOne(+id);
+    return await this.receiversService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-update`] })
   async update(
     @Param('id') id: number,
-    @Body() updateReceiverDto: UpdateReceiverDto,
+    @Body() dto: UpdateReceiverDto,
   ) {
-    return await this.receiversService.update(+id, updateReceiverDto);
+    return await this.receiversService.update(id, dto);
   }
 
   @Delete(':id')
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-delete`] })
   async remove(@Param('id') id: number) {
-    return await this.receiversService.remove(+id);
+    return await this.receiversService.remove(id);
   }
 }
