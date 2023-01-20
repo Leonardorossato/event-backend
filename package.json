@@ -21,6 +21,7 @@
     "@nestjs/core": "^9.2.1",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.2.1",
+    "@nestjs/swagger": "^6.1.4",
     "@nestjs/typeorm": "^9.0.1",
     "keycloak-connect": "^20.0.3",
     "nest-keycloak-connect": "^1.9.1",
