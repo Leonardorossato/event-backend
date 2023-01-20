@@ -11,7 +11,6 @@ import {
   RoleGuard,
 } from 'nest-keycloak-connect';
 import { KeycloakConfigService } from './keycloak/keycloak.service';
-
 @Module({
   imports: [
     ReceiversModule,
@@ -20,7 +19,11 @@ import { KeycloakConfigService } from './keycloak/keycloak.service';
       useExisting: KeycloakConfigService,
       imports: [KeycloakModule],
     }),
-    ConfigModule.forRoot({ isGlobal: true}),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      cache: true,
+      envFilePath: ['./.env'],
+    }),
     AuthModule,
   ],
   providers: [
