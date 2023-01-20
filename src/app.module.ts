@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
+import { ReceiversModule } from './receivers/receivers.module';
 
 @Module({
-  imports: []
+  imports: [ReceiversModule],
 })
 export class AppModule {}
