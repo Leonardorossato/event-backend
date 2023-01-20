@@ -11,7 +11,7 @@ export class AuthService {
         {
           ...dto,
           grant_type: 'password',
-          client_id: `${process.env.KEYCLOAK_CLIENT_ID}`,
+          client_id: `${process.env.KEYCLOAK_CLIENT}`,
           client_secret: `${process.env.KEYCLOAK_SECRET}`,
           scope: 'openid',
         },
