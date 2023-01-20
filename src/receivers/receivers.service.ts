@@ -8,7 +8,7 @@ import { Receiver } from './entities/receiver.entity';
 @Injectable()
 export class ReceiversService {
   constructor(
-    @InjectRepository(InjectRepository)
+    @InjectRepository(Receiver)
     private readonly receiverRepository: Repository<Receiver>,
   ) {}
 
@@ -68,7 +68,7 @@ export class ReceiversService {
           `Error finding receiver wtih id: ${id}`,
           HttpStatus.NOT_FOUND,
         );
-      await this.receiverRepository.delete(receiver);
+      await this.receiverRepository.delete(id);
       return { message: 'Successfully removed a receiver' };
     } catch (error) {
       throw new HttpException(
