@@ -12,7 +12,7 @@ export class KeycloakConfigService implements KeycloakConnectOptionsFactory {
     return {
       authServerUrl: process.env.KEYCLOAK_URL ?? 'http://localhost:8080',
       realm: process.env.KEYCLOAK_REALM ?? 'master',
-      clientId: process.env.KEYCLOAK_CLIENT ?? 'my-secret-client',
+      clientId: process.env.KEYCLOAK_CLIENT_ID ?? 'my-nestjs-app',
       secret: process.env.KEYCLOAK_SECRET ?? 'secret',
       verifyTokenAudience: false,
       policyEnforcement: PolicyEnforcementMode.PERMISSIVE,
