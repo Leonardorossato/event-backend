@@ -1,26 +1,43 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateReceiverDto } from './dto/create-receiver.dto';
 import { UpdateReceiverDto } from './dto/update-receiver.dto';
+import { Receiver } from './entities/receiver.entity';
 
 @Injectable()
 export class ReceiversService {
-  create(createReceiverDto: CreateReceiverDto) {
-    return 'This action adds a new receiver';
+  constructor(
+    @InjectRepository(InjectRepository)
+    private readonly receiverRepository: Repository<Receiver>,
+  ) {}
+
+  async create(dto: CreateReceiverDto) {
+    try {
+      const receiver = await this.receiverRepository.create(dto);
+      await this.receiverRepository.save(receiver);
+      return receiver;
+    } catch (error) {
+      throw new HttpException(
+        'Error creating a receiver',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
-  findAll() {
+  async findAll() {
     return `This action returns all receivers`;
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     return `This action returns a #${id} receiver`;
   }
 
-  update(id: number, updateReceiverDto: UpdateReceiverDto) {
+  async update(id: number, updateReceiverDto: UpdateReceiverDto) {
     return `This action updates a #${id} receiver`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} receiver`;
   }
 }
