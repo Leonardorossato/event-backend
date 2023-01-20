@@ -14,7 +14,11 @@
     "start:debug": "cross-env && yarn build && nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix",
-    "typeorm": "ts-node -r dotenv/config ./node_modules/typeorm/cli.js -d ormconfig.js"
+    "typeorm": "ts-node -r dotenv/config ./node_modules/typeorm/cli.js -d ormconfig.js",
+    "migration:create": "yarn build && yarn typeorm migration:create",
+    "migration:run": "yarn build && yarn typeorm migration:run",
+    "migration:revert": "yarn build && yarn typeorm migration:revert",
+    "migration:gen": "yarn build && yarn typeorm migration:generate"
   },
   "dependencies": {
     "@nestjs/common": "^9.2.1",
