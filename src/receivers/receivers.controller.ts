@@ -12,7 +12,8 @@ import { CreateReceiverDto } from './dto/create-receiver.dto';
 import { UpdateReceiverDto } from './dto/update-receiver.dto';
 import { Roles } from 'nest-keycloak-connect';
 import { ApiBearerAuth } from '@nestjs/swagger';
-
+import * as dotenv from 'dotenv' 
+dotenv.config({path: './.env'})
 @Controller('receivers')
 @ApiBearerAuth()
 export class ReceiversController {
