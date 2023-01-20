@@ -22,6 +22,8 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.2.1",
     "@nestjs/typeorm": "^9.0.1",
+    "keycloak-connect": "^20.0.3",
+    "nest-keycloak-connect": "^1.9.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^4.1.1",
     "rxjs": "^7.6.0",
