@@ -11,9 +11,10 @@ import {
   RoleGuard,
 } from 'nest-keycloak-connect';
 import { KeycloakConfigService } from './keycloak/keycloak.service';
-import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-dotenv.config({path: './.env'})
-
+import * as dotenv from 'dotenv';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { PostgresSqlConnection } from './config/ormconfig';
+dotenv.config({ path: './.env' });
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ dotenv.config({path: './.env'})
       useExisting: KeycloakConfigService,
       imports: [KeycloakModule],
     }),
+    TypeOrmModule.forRootAsync(PostgresSqlConnection),
     ConfigModule.forRoot({
       isGlobal: true,
       expandVariables: true,
