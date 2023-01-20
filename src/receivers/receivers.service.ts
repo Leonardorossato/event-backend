@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, UpdateValuesMissingError } from 'typeorm';
 import { CreateReceiverDto } from './dto/create-receiver.dto';
 import { UpdateReceiverDto } from './dto/update-receiver.dto';
 import { Receiver } from './entities/receiver.entity';
@@ -26,18 +26,55 @@ export class ReceiversService {
   }
 
   async findAll() {
-    return `This action returns all receivers`;
+    try {
+      const receiver = await this.receiverRepository.find();
+      return receiver;
+    } catch (error) {
+      throw new HttpException(
+        'Error finding all receiver',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   async findOne(id: number) {
     return `This action returns a #${id} receiver`;
   }
 
-  async update(id: number, updateReceiverDto: UpdateReceiverDto) {
-    return `This action updates a #${id} receiver`;
+  async update(id: number, dto: UpdateReceiverDto) {
+    try {
+      const receiver = await this.receiverRepository.findOneBy({ id: id });
+      if (!receiver)
+        throw new HttpException(
+          `Error finding receiver wtih id: ${id}`,
+          HttpStatus.NOT_FOUND,
+        );
+      await this.receiverRepository.update(receiver, dto);
+      return { message: 'Successfully updated a receiver' };
+    } catch (error) {
+      const err = error as UpdateValuesMissingError;
+      throw new HttpException(
+        { message: 'Error updating a receiver', error: err.message },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   async remove(id: number) {
-    return `This action removes a #${id} receiver`;
+    try {
+      const receiver = await this.receiverRepository.findOneBy({ id: id });
+      if (!receiver)
+        throw new HttpException(
+          `Error finding receiver wtih id: ${id}`,
+          HttpStatus.NOT_FOUND,
+        );
+      await this.receiverRepository.delete(receiver);
+      return { message: 'Successfully removed a receiver' };
+    } catch (error) {
+      throw new HttpException(
+        `Error removing a receiver with id: ${id}`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }
