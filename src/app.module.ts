@@ -20,7 +20,7 @@ import { KeycloakConfigService } from './keycloak/keycloak.service';
       useExisting: KeycloakConfigService,
       imports: [KeycloakModule],
     }),
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true, expandVariables: true }),
     AuthModule,
   ],
   providers: [
