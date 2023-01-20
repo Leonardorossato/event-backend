@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ReceiversService } from './receivers.service';
 import { CreateReceiverDto } from './dto/create-receiver.dto';
 import { UpdateReceiverDto } from './dto/update-receiver.dto';
+import { Roles } from 'nest-keycloak-connect';
 
 @Controller('receivers')
 export class ReceiversController {
@@ -13,6 +22,7 @@ export class ReceiversController {
   }
 
   @Get()
+  @Roles({ roles: [`realms: ${process.env.KEYCLOAK_CLIENT_ID}-api-read`] })
   findAll() {
     return this.receiversService.findAll();
   }
@@ -23,7 +33,10 @@ export class ReceiversController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateReceiverDto: UpdateReceiverDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateReceiverDto: UpdateReceiverDto,
+  ) {
     return this.receiversService.update(+id, updateReceiverDto);
   }
 
