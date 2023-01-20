@@ -24,7 +24,7 @@ export class ReceiversController {
   }
 
   @Get()
-  @Roles({ roles: [`realm: ${process.env.KEYCLOAK_CLIENT_ID}-api-read`] })
+  @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-read`] })
   findAll() {
     return this.receiversService.findAll();
   }
