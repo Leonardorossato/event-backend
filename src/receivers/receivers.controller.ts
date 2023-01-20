@@ -11,8 +11,10 @@ import { ReceiversService } from './receivers.service';
 import { CreateReceiverDto } from './dto/create-receiver.dto';
 import { UpdateReceiverDto } from './dto/update-receiver.dto';
 import { Roles } from 'nest-keycloak-connect';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('receivers')
+@ApiBearerAuth()
 export class ReceiversController {
   constructor(private readonly receiversService: ReceiversService) {}
 
@@ -22,7 +24,7 @@ export class ReceiversController {
   }
 
   @Get()
-  @Roles({ roles: [`realms: ${process.env.KEYCLOAK_CLIENT_ID}-api-read`] })
+  @Roles({ roles: [`realm: ${process.env.KEYCLOAK_CLIENT_ID}-api-read`] })
   findAll() {
     return this.receiversService.findAll();
   }
