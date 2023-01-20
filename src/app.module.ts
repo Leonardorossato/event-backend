@@ -11,6 +11,10 @@ import {
   RoleGuard,
 } from 'nest-keycloak-connect';
 import { KeycloakConfigService } from './keycloak/keycloak.service';
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config({path: './.env'})
+
+
 @Module({
   imports: [
     ReceiversModule,
@@ -21,8 +25,8 @@ import { KeycloakConfigService } from './keycloak/keycloak.service';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
+      expandVariables: true,
       cache: true,
-      envFilePath: ['./.env'],
     }),
     AuthModule,
   ],
