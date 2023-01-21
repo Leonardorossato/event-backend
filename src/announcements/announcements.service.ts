@@ -42,12 +42,21 @@ export class AnnouncementsService {
 
   async update(id: number, updateAnnouncementDto: UpdateAnnouncementDto) {
     try {
-      const announcement = await this.announcementRepository.findOneBy({id :id})
-      if(!announcement) throw new HttpException(`Error to find announcement with id: ${id}`, HttpStatus.NOT_FOUND)
-      await this.announcementRepository.update(id, updateAnnouncementDto)
-      return {message: 'Ann'}
+      const announcement = await this.announcementRepository.findOneBy({
+        id: id,
+      });
+      if (!announcement)
+        throw new HttpException(
+          `Error to find announcement with id: ${id}`,
+          HttpStatus.NOT_FOUND,
+        );
+      await this.announcementRepository.update(id, updateAnnouncementDto);
+      return { message: 'Announcement successfully updated.' };
     } catch (error) {
-      
+      throw new HttpException(
+        'Error to updated a announcement',
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
