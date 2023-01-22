@@ -27,6 +27,12 @@ export class ReceiversController {
     return await this.receiversService.create(createReceiverDto);
   }
 
+  @Post()
+  @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
+  async createEventWhastApp(@Body() createReceiverDto: CreateReceiverDto) {
+    return await this.receiversService.createEventWhastApp(createReceiverDto);
+  }
+
   @Get()
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-read`] })
   async findAll() {
@@ -41,10 +47,7 @@ export class ReceiversController {
 
   @Put(':id')
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-update`] })
-  async update(
-    @Param('id') id: number,
-    @Body() dto: UpdateReceiverDto,
-  ) {
+  async update(@Param('id') id: number, @Body() dto: UpdateReceiverDto) {
     return await this.receiversService.update(id, dto);
   }
 

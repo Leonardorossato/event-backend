@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import axios from 'axios';
 import { Repository, UpdateValuesMissingError } from 'typeorm';
 import { CreateReceiverDto } from './dto/create-receiver.dto';
 import { UpdateReceiverDto } from './dto/update-receiver.dto';
@@ -20,6 +21,46 @@ export class ReceiversService {
     } catch (error) {
       throw new HttpException(
         'Error creating a receiver',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async createEventWhastApp(dto: CreateReceiverDto) {
+    try {
+      const result = await axios.post(
+        `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-messages`,
+        {
+          ...dto,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        },
+      );
+      return result.data;
+    } catch (error) {
+      throw new HttpException(
+        'Error ao create a event for whatsapp',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async createEventEmail(dto: CreateReceiverDto) {
+    try {
+      const result = await axios.post(
+        `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-messages`,
+        {
+          ...dto,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        },
+      );
+      return result.data;
+    } catch (error) {
+      throw new HttpException(
+        'Error ao create a event for whatsapp',
         HttpStatus.BAD_REQUEST,
       );
     }
