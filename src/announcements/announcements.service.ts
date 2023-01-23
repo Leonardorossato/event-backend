@@ -42,7 +42,7 @@ export class AnnouncementsService {
       return result.data;
     } catch (error) {
       throw new HttpException(
-        'Error ao create a event for whatsapp',
+        'Erro in create a event for whatsapp',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -62,7 +62,7 @@ export class AnnouncementsService {
       return result.data;
     } catch (error) {
       throw new HttpException(
-        'Error ao create a event for whatsapp',
+        'Error to create a event for email',
         HttpStatus.BAD_REQUEST,
       );
     }
