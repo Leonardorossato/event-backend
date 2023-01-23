@@ -1,20 +1,20 @@
 # Evento Z-API
 
-Descrição: Sistema de integração com API`s para criar eventos e envia-los.
+Description: Integration system with API`s to create events and send them.
 
 Conteudo:
 
-- Comunicados;
-- Recebedores;
+- Announcements;
+- Receivers;
 - Events;
-- Keycloak.
+- Keycloak
 
-# Como Usar o Keycloak:
+# How To use the Keycloak:
 
 - https://www.keycloak.org/documentation
 - https://www.npmjs.com/package/nest-keycloak-connect
 
-### Como que é gerado o Token de acesso
+### How the Token acess is generated:
 
 Utilizamos alguns parametros do proprio keycloak e o Postman para gerar o token de acesso no sistema:
 
@@ -33,7 +33,7 @@ Utilizamos alguns parametros do proprio keycloak e o Postman para gerar o token 
 - global-events-api-update: Allow who was the access can update events on system
 - global-events-api-delete: Allow who was the access can delete events on system.
 
-## Erros do Keycloak na aplicação:
+## Erros in Keycloak on application:
 
 - No authenticade: token expire;
 - No authorazed: user dont have permission to access this route.
@@ -44,9 +44,9 @@ Z-API is a RestFul service that provides an API that allows you to interact with
 
 ## Can connect with databases:
 
-Postgres
+- Postgres
 
-### Dependencias para rodar o projeto
+### Dependencies to run the project:
 
 - Baixar o projeto usando no terminal(ambos) git clone https://github.com/Leonardorossato/evento-backned-nestjs.git
 
@@ -80,12 +80,12 @@ EX:
 }
 ```
 
-- Se a autenticação estiver correta retornara um token para ser utilizado na API;
-- Caso o email ou a senha estiverem errados retornar erro 401.
+- If authentication is correct, return a token to be used in the API;
+- If the email or password are wrong, return error 401.
 
-## Rota de recebedores:
+## Receiver route:
 
-Esta rota retorna todos os recebedores que estão cadastrado no sistema.
+This route returns all recipients that are registered in the system.
 
 EX:
 http://localhost:7000/api#/Recebedores/RecebedoresController_findAll
@@ -94,41 +94,42 @@ http://localhost:7000/api#/Recebedores/RecebedoresController_findAll
 [
     {
     "id": 1,
-    "nomeCompleto": "Teste",
+    "fullname": "Teste",
     "email": "olamudo@gmail.com",
     "whatsapp": "552799675994",
-    "telefone": "552799675994",
+    "cellphone": "552799675994",
     "message": "ola mundo",
     "createdAt": "2023-01-18T23:31:57.949Z"
   }
 ]
 ```
 
-- Caso tenha dados ele retorna todos os recebedores;
-- Caso não tenha nenhum dado no banco cadastrado retorna vazio:
+- If it has data, it returns all recipients;
+- Caso não tenha nenhum dado no banco cadastrado retorna vazioIf there is no data in the registered database, it returns empty:
 
 ```
 []
 ```
 
-- Agora se ocorrer erro, retorna erro 500;
-- Caso o usuario tentar acessar essa rota sem permissão pelo keycloak, irá retornar erro de
-  permissão.
+- Now if an error occurs, it returns error 500;
+- If the user tries to access this route without permission by keycloak, it will return error of
+  permission.
 
-## Rota de receberdores pelo indenticador unico(Id):
+## Route recipients by unique identifier(Id):
 
 Ex:
 http://localhost:7000/api#/Recebedores/RecebedoresController_findOne
 
-- Para encontrar um recebedor utilize o Id como para paremetro de busca:
-  EX:
+- To find a recipient use the Id as a search parameter:
+
+EX:
 
 ```
 Parametro: id:1
 
 {
   "id": 1,
-  "nomeCompleto": "string",
+  "fullName": "string",
   "email": "string",
   "whatsapp": "string",
   "telefone": "string",
@@ -138,10 +139,9 @@ Parametro: id:1
 
 ```
 
-- Se tiver o id digitado pelo usuario ele vai retornar status 200 com o resultado do id digitado
-- Caso o id digitado pelo usuario não existir, ele vai retornar erro 400, não encontrado;
-- Caso o usuario tentar acessar essa rota sem permissão pelo keycloak, irá retornar erro de
-  permissão.
+- If it has the id typed by the user it will return status 200 with the result of the id typed;
+- If the id entered by the user does not exist, it will return error 400, not found;
+- If the user tries to access this route without permission by keycloak, it will return permission error.
 
 ## Rota para atualizar dados do recebedor:
 
@@ -152,7 +152,7 @@ Parametro: id: 1
 
 ```
 {
-  "nomeCompleto": "Leoanrdo 32423cds",
+  "fullName": "Leoanrdo 32423cds",
   "email": "tresteaqui@gmail.com",
   "whatsapp": "279965852210",
   "telefone": "279965852210",
@@ -160,12 +160,12 @@ Parametro: id: 1
 }
 ```
 
-- Caso os dados do corpo passado pelo usuario forem corretos ira retornar uma mensagem que
-  os dados forma atualizados com sucesso;
-- Caso o Id digitado pelo usuario não for econtrado, ira retornar erro 404;
-- Caso os dados passados pelo usuario dentro do corpo tiverem errados irá retornar erro 404;
-- Caso o usuario tentar acessar essa rota sem permissão pelo keycloak, irá retornar erro de
-  permissão.
+- If the body data passed by the user are correct, it will return a message that
+  the data was updated successfully;
+- If the Id entered by the user is not found, it will return a 404 error;
+- If the data passed by the user inside the body is wrong, it will return a 404 error;
+- If the user tries to access this route without permission by keycloak, it will return error of
+  permission.
 
 ## Rota para deletar um recebedor:
 
@@ -176,11 +176,9 @@ EX:
 Parametro: id: 1
 ```
 
-- Caso o Id digitado pelo usuario for econtrado ira retornar uma mensagem que o recebedor
-  foi deletado do sistema com sucesso;
-- Caso o Id digitado pelo usuario nmão for econtrado ira retornar erro 404;
-- Caso o usuario tentar acessar essa rota sem permissão pelo keycloak, irá retornar erro de
-  permissão.
+- If the Id entered by the user was found, it will return a message that the recipient was successfully deleted from the system;
+- If the id entered by the user is not found, it will return a 404 error;
+- If the user tries to access this route without permission by keycloak, it will return permission error.
 
 ## Rota para ver todos os Comunicados:
 
@@ -192,25 +190,24 @@ Ex:
 [
   {
     "id": 1,
-    "nome": "string",
+    "name": "string",
     "email": "string",
-    "titulo": "string",
+    "title": "string",
     "tituloComunicado": "string",
     "createdAt": "2023-01-19T14:51:52.738Z"
   }
 ]
 ```
 
-- Caso tenha dados dos comunicados irá retornar 200 Ok, com todos os comunicados registrados
-  no sistema,
-- Caso não tenha nenhum dado ainda no sistema, ele reternorá status 200 Ok, com um array vazio:
+- If it has data from the announcements, it will return 200 Ok, with all the announcements registered in the system,
+- If there is no data yet in the system, it returns status 200 Ok, with an empty array:
 
 ```
 []
 ```
 
-- Caso o usuario tentar acessar essa rota sem permissão pelo keycloak, irá retornar erro de
-  permissão.
+- If the user tries to access this route without permission by keycloak, it will return error of
+  permission.
 
 ## Rota para criar um Comunicado:
 
@@ -220,17 +217,17 @@ Ex:
 
 ```
 {
-  "nome": "string",
+  "name": "string",
   "email": "string",
   "titulo": "string",
   "tituloComunicado": "string"
 }
 ```
 
-- Se todos os dados forem passados no corpo, ele retornar status 201, de que um comunicado foi criado com sucesso;
-- Se algum campo do corpo do comunicado estiver errado, ele retornar erro status 404;
-- Caso o usuario tentar acessar essa rota sem permissão pelo keycloak, irá retornar erro de
-  permissão.
+- If all data is passed in the body, it will return status 201, that an announcement was successfully created;
+- If any field in the body of the release is wrong, it will return a status 404 error;
+- If the user tries to access this route without permission by keycloak, it will return error of
+  permission.
 
 ## Rota para pegar um comunicado por Id:
 
@@ -250,8 +247,6 @@ Parametro: id: 1
 }
 ```
 
-- Caso tenha o Id do comunicados irá retornar status 200 Ok, com o comunicado registrado
-  no sistema,
-- Caso o Id passado pelo parametro não exista, irá retornar erro de status 404;
-- Caso o usuario tentar acessar essa rota sem permissão pelo keycloak, irá retornar erro de
-  permissão.
+- If you have the Id of the announcement, it will return status 200 Ok, with the announcement registered in the system;
+- If the Id passed by the parameter does not exist, it will return a status error 404;
+- If the user tries to access this route without permission by keycloak, it will return permission error.
