@@ -14,7 +14,7 @@ Conteudo:
 - https://www.keycloak.org/documentation
 - https://www.npmjs.com/package/nest-keycloak-connect
 
-### How the Token acess is generated:
+### How the access token is generated:
 
 Utilizamos alguns parametros do proprio keycloak e o Postman para gerar o token de acesso no sistema:
 
@@ -26,7 +26,7 @@ Utilizamos alguns parametros do proprio keycloak e o Postman para gerar o token 
 - Password: Your password do system;
 - Scope: openid.
 
-## Permissões do Keycloak:
+## Permissions do Keycloak:
 
 - global-events-api-create: Allow who was the access can create events on system.
 - global-events-api-read: Allow who was the access can see all events on system.
