@@ -14,8 +14,6 @@ import { KeycloakConfigService } from './keycloak/keycloak.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgresSqlConnection } from './config/ormconfig';
 import { AnnouncementsModule } from './announcements/announcements.module';
-import * as dotenv from 'dotenv';
-dotenv.config({ path: './.env' });
 
 @Module({
   imports: [
