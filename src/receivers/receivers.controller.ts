@@ -41,8 +41,8 @@ export class ReceiversController {
 
   @Put(':id')
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-update`] })
-  async update(@Param('id') id: number, @Body() dto: UpdateReceiverDto) {
-    return await this.receiversService.update(id, dto);
+  async update(@Param('id') id: number, @Body() updateReceiverDto: UpdateReceiverDto) {
+    return await this.receiversService.update(id, updateReceiverDto);
   }
 
   @Delete(':id')

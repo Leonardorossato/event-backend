@@ -42,7 +42,7 @@ export class ReceiversService {
     return `This action returns a #${id} receiver`;
   }
 
-  async update(id: number, dto: UpdateReceiverDto) {
+  async update(id: number, updateReceiverDto: UpdateReceiverDto) {
     try {
       const receiver = await this.receiverRepository.findOneBy({ id: id });
       if (!receiver)
@@ -50,12 +50,11 @@ export class ReceiversService {
           `Error finding receiver wtih id: ${id}`,
           HttpStatus.NOT_FOUND,
         );
-      await this.receiverRepository.update(receiver, dto);
+      await this.receiverRepository.update(id, updateReceiverDto);
       return { message: 'Successfully updated a receiver' };
     } catch (error) {
-      const err = error as UpdateValuesMissingError;
       throw new HttpException(
-        { message: 'Error updating a receiver', error: err.message },
+        'Error updating a receiver',
         HttpStatus.BAD_REQUEST,
       );
     }
