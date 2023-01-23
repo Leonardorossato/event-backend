@@ -252,7 +252,7 @@ Parametro: id: 1
 - If the Id passed by the parameter does not exist, it will return a status error 404;
 - If the user tries to access this route without permission by keycloak, it will return permission error.
 
-## Create a event by WhatsApp:
+## Create a event by Email:
 
 EX: http://localhost:7000/api#/Comunicados/AnnouncementsController_createEventByEmail
 
