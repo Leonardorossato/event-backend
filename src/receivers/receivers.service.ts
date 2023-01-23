@@ -26,7 +26,7 @@ export class ReceiversService {
     }
   }
 
-  async createEventWhastApp(dto: CreateReceiverDto) {
+  async createEventByWhastApp(dto: CreateReceiverDto) {
     try {
       const result = await axios.post(
         `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-messages`,
@@ -46,7 +46,7 @@ export class ReceiversService {
     }
   }
 
-  async createEventEmail(dto: CreateReceiverDto) {
+  async createEventByEmail(dto: CreateReceiverDto) {
     try {
       const result = await axios.post(
         `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-messages`,
