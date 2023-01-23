@@ -11,10 +11,10 @@ import {
   RoleGuard,
 } from 'nest-keycloak-connect';
 import { KeycloakConfigService } from './keycloak/keycloak.service';
-import * as dotenv from 'dotenv';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgresSqlConnection } from './config/ormconfig';
 import { AnnouncementsModule } from './announcements/announcements.module';
+import * as dotenv from 'dotenv';
 dotenv.config({ path: './.env' });
 
 @Module({
@@ -28,8 +28,7 @@ dotenv.config({ path: './.env' });
     TypeOrmModule.forRootAsync(PostgresSqlConnection),
     ConfigModule.forRoot({
       isGlobal: true,
-      expandVariables: true,
-      cache: true,
+      expandVariables: true
     }),
     AuthModule,
     AnnouncementsModule,
