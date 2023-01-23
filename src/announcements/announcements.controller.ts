@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { Roles } from 'nest-keycloak-connect';
 import { AnnouncementsService } from './announcements.service';
@@ -50,7 +51,7 @@ export class AnnouncementsController {
     return await this.announcementsService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-update`] })
   async update(
     @Param('id') id: number,
