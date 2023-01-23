@@ -105,7 +105,7 @@ http://localhost:7000/api#/Recebedores/RecebedoresController_findAll
 ```
 
 - If it has data, it returns all recipients;
-- Caso não tenha nenhum dado no banco cadastrado retorna vazioIf there is no data in the registered database, it returns empty:
+- If there is no data in the registered database, it returns empty If there is no data in the registered database, it returns empty:
 
 ```
 []
@@ -143,7 +143,7 @@ Parametro: id:1
 - If the id entered by the user does not exist, it will return error 400, not found;
 - If the user tries to access this route without permission by keycloak, it will return permission error.
 
-## Rota para atualizar dados do recebedor:
+## Route to update receiver data:
 
 http://localhost:7000/api#/Recebedores/RecebedoresController_update
 EX:
@@ -229,7 +229,7 @@ Ex:
 - If the user tries to access this route without permission by keycloak, it will return error of
   permission.
 
-## Rota para pegar um comunicado por Id:
+## Route to get an announcement by Id:
 
 http://localhost:7000/api#/Comunicados/ComunicadosController_findOne
 
@@ -239,14 +239,32 @@ Ex:
 Parametro: id: 1
 {
   "id": 1,
-  "nome": "string",
+  "name": "string",
   "email": "string",
-  "titulo": "string",
-  "tituloComunicado": "string",
+  "creatorAnnouncement": "string",
+  "creatorEmail": "string",
+  "communiqContent": "string"
   "createdAt": "2023-01-19T14:51:52.738Z"
 }
 ```
 
 - If you have the Id of the announcement, it will return status 200 Ok, with the announcement registered in the system;
 - If the Id passed by the parameter does not exist, it will return a status error 404;
+- If the user tries to access this route without permission by keycloak, it will return permission error.
+
+## Create a event by WhatsApp:
+
+EX: http://localhost:7000/api#/Comunicados/AnnouncementsController_createEventByEmail
+
+```
+{
+  "receiverId": 0,
+  "creatorAnnouncement": "string",
+  "creatorEmail": "string",
+  "communiqContent": "string"
+}
+```
+
+- If the user passes the correct data in the body, it returns status 200 Ok;
+- If the user passes incomplete data in the body, it returns status 404 error;
 - If the user tries to access this route without permission by keycloak, it will return permission error.
