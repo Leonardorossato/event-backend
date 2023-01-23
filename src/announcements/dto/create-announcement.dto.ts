@@ -6,7 +6,7 @@ export class CreateAnnouncementDto {
 
   @ApiProperty({
     nullable: false,
-    type: 'varchar',
+    type: String,
     minLength: 3,
     maxLength: 255,
   })
@@ -14,7 +14,7 @@ export class CreateAnnouncementDto {
 
   @ApiProperty({
     nullable: false,
-    type: 'varchar',
+    type: String,
     minLength: 3,
     maxLength: 255,
   })
@@ -22,7 +22,7 @@ export class CreateAnnouncementDto {
 
   @ApiProperty({
     nullable: false,
-    type: 'varchar',
+    type: String,
     minLength: 3,
     maxLength: 255,
   })
