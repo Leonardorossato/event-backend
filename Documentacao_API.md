@@ -6,7 +6,7 @@ Conteudo:
 
 - Comunicados;
 - Recebedores;
-- Eventos;
+- Events;
 - Keycloak.
 
 # Como Usar o Keycloak:
@@ -18,32 +18,31 @@ Conteudo:
 
 Utilizamos alguns parametros do proprio keycloak e o Postman para gerar o token de acesso no sistema:
 
-- Token Name=global-evento;
-- Access Token URL: Url do projeto;
-- Client ID: Nome do projeto;
-- Client Secret: Sera passado;
-- Username: Seu usuario do sistema;
-- Password: Sua senha do sistema;
+- Token Name=global-events;
+- Access Token URL: Url;
+- Client ID: Name to the project;
+- Client Secret: Secret;
+- Username: Your user email in system;
+- Password: Your password do system;
 - Scope: openid.
-- Postman: é uma plataforma de API para desenvolvedores projetar, construir, testar e iterar suas APIs.
 
 ## Permissões do Keycloak:
 
-- global-evento-api-create: Permite quem tenha esta permissão possa criar eventos no sistema.
-- global-evento-api-read: Permite quem tenha esta permissão possa ter todos eventos no sistema.
-- global-evento-api-update: Permite quem tenha esta permissão possa atualizar eventos no sistema
-- global-evento-api-delete: Permite quem tenha esta permissão possa deletar eventos no sistema.
+- global-events-api-create: Allow who was the access can create events on system.
+- global-events-api-read: Allow who was the access can see all events on system.
+- global-events-api-update: Allow who was the access can update events on system
+- global-events-api-delete: Allow who was the access can delete events on system.
 
 ## Erros do Keycloak na aplicação:
 
-- Não autenticado: token expirou;
-- Não autorizado: usuario não tem permissão para acessar esta rota.
+- No authenticade: token expire;
+- No authorazed: user dont have permission to access this route.
 
 ## Z-API:
 
-Z-API é um serviço RestFul que provê uma API que permite que você interaja com seu Whatsapp através uma API simples e intuitiva, além de webhooks para te avisar sobre interações com seu número.
+Z-API is a RestFul service that provides an API that allows you to interact with your Whatsapp through a simple and intuitive API, as well as webhooks to warn you about relaxed with your number.
 
-## Pode conectar com estes bancos:
+## Can connect with databases:
 
 Postgres
 
@@ -65,13 +64,11 @@ Postgres
 - Docker Linux [Docker]: (https://docs.docker.com/engine/install/ubuntu/)
 - Ter instalado o banco de dados DBeaver[DBeaver]: (https://dbeaver.io/).
 
-## Funcionamento Da API:
-
-Para utilizar a API teremos que esta cadastrado no keycloak(Autorização e autenticação) para utiliza-lá
+# API Operation
 
 ## Rota de Login:
 
-Para Logar no Sistema precisamos loagr com o username e password.
+To login to the system we need to login with username and password.
 
 http://localhost:7000/api/Autenciação/auth/login
 EX:
