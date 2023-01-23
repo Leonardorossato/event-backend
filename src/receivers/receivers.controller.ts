@@ -27,18 +27,6 @@ export class ReceiversController {
     return await this.receiversService.create(createReceiverDto);
   }
 
-  @Post('/event/:email')
-  @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
-  async createEventWhastApp(@Body() createReceiverDto: CreateReceiverDto) {
-    return await this.receiversService.createEventByWhastApp(createReceiverDto);
-  }
-
-  @Post('/event/:whastApp')
-  @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
-  async createEventByEmail(@Body() createReceiverDto: CreateReceiverDto) {
-    return await this.receiversService.createEventByEmail(createReceiverDto);
-  }
-
   @Get()
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-read`] })
   async findAll() {

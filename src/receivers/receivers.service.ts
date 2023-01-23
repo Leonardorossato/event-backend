@@ -26,46 +26,6 @@ export class ReceiversService {
     }
   }
 
-  async createEventByWhastApp(dto: CreateReceiverDto) {
-    try {
-      const result = await axios.post(
-        `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-messages`,
-        {
-          ...dto,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-      return result.data;
-    } catch (error) {
-      throw new HttpException(
-        'Error ao create a event for whatsapp',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-
-  async createEventByEmail(dto: CreateReceiverDto) {
-    try {
-      const result = await axios.post(
-        `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-messages`,
-        {
-          ...dto,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-      return result.data;
-    } catch (error) {
-      throw new HttpException(
-        'Error ao create a event for whatsapp',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-
   async findAll() {
     try {
       const receiver = await this.receiverRepository.find();
