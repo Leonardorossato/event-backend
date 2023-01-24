@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
 import { Announcement } from './entities/announcement.entity';
+import sgMail from '@sendgrid/mail';
 
 @Injectable()
 export class AnnouncementsService {
@@ -50,16 +51,34 @@ export class AnnouncementsService {
 
   async createEventByEmail(dto: CreateAnnouncementDto) {
     try {
-      const result = await axios.post(
-        `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-messages`,
-        {
-          ...dto,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-      return result.data;
+      const email = await this.announcementRepository.findOneBy({
+        creatorEmail: dto.creatorEmail,
+      });
+
+      if (!email)
+        throw new HttpException('This email not exists', HttpStatus.NOT_FOUND);
+
+      const apiKey = process.env.API_KEY as string;
+      sgMail.setApiKey(apiKey);
+
+      const res = {
+        to: dto.creatorEmail,
+        from: 'lolzinhobr1000@gmail.com',
+        subject: dto.communiqContent,
+        text: dto.creatorAnnouncement,
+        body: dto.communiqContent,
+        html: '<p>Ola mundo</p>',
+      };
+
+      sgMail
+        .send(res)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      return res;
     } catch (error) {
       throw new HttpException(
         'Error to create a event for email',
