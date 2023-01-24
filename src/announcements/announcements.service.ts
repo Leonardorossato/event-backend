@@ -1,14 +1,14 @@
 import { Receiver } from '@/receivers/entities/receiver.entity';
+import { MailerService } from '@nestjs-modules/mailer';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import sgMail from '@sendgrid/mail';
 import axios from 'axios';
 import { Repository } from 'typeorm';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
 import { Announcement } from './entities/announcement.entity';
-import sgMail from '@sendgrid/mail';
-import { MailerService } from '@nestjs-modules/mailer';
-import { CreateEventEmailDto } from './dto/create-evento-email.dto';
+
 @Injectable()
 export class AnnouncementsService {
   constructor(
