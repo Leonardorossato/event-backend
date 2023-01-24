@@ -41,6 +41,9 @@ import { AnnouncementsModule } from './announcements/announcements.module';
             pass: config.get('API_PASSWORD'),
           },
         },
+        defaults: {
+          from: config.get('API_MAIL_FROM')
+        }
       }),
       inject: [ConfigService],
     }),
