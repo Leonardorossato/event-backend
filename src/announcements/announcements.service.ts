@@ -7,7 +7,8 @@ import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
 import { Announcement } from './entities/announcement.entity';
 import sgMail from '@sendgrid/mail';
-
+import { MailerService } from '@nestjs-modules/mailer';
+import { CreateEventEmailDto } from './dto/create-evento-email.dto';
 @Injectable()
 export class AnnouncementsService {
   constructor(
@@ -15,6 +16,7 @@ export class AnnouncementsService {
     private readonly announcementRepository: Repository<Announcement>,
     @InjectRepository(Receiver)
     private readonly receiverRepository: Repository<Receiver>,
+    private readonly mailService: MailerService,
   ) {}
   async create(dto: CreateAnnouncementDto) {
     try {
@@ -49,36 +51,36 @@ export class AnnouncementsService {
     }
   }
 
-  async createEventByEmail(dto: CreateAnnouncementDto) {
+  async createEventByEmail(email: string, subject: string, body: string) {
     try {
-      const email = await this.announcementRepository.findOneBy({
-        creatorEmail: dto.creatorEmail,
+      const user = await this.announcementRepository.findOneBy({
+        creatorEmail: email,
       });
-
-      if (!email)
-        throw new HttpException('This email not exists', HttpStatus.NOT_FOUND);
-
+      if (!user) {
+        throw new HttpException('Email not exists', HttpStatus.NOT_FOUND);
+      }
       const apiKey = process.env.API_KEY as string;
-      sgMail.setApiKey(apiKey);
+      await sgMail.setApiKey(apiKey);
 
-      const res = {
-        to: dto.creatorEmail,
-        from: 'lolzinhobr1000@gmail.com',
-        subject: dto.communiqContent,
-        text: dto.creatorAnnouncement,
-        body: dto.communiqContent,
-        html: '<p>Ola mundo</p>',
+      const message = {
+        to: email,
+        subject: subject,
+        from: 'leonardo.adami@globalsys.com.br',
+        html: body,
       };
 
-      sgMail
-        .send(res)
-        .then((res) => {
-          console.log(res);
+      await this.scheduleEmail(message.to,message.subject, message.html);
+
+      await sgMail
+        .send(message)
+        .then((response) => {
+          return response[0].body;
         })
         .catch((error) => {
           console.error(error);
         });
-      return res;
+      const result = await this.mailService.sendMail(message);
+      return result;
     } catch (error) {
       throw new HttpException(
         'Error to create a event for email',
@@ -148,6 +150,20 @@ export class AnnouncementsService {
         `Error to remove announcement with id: ${id}`,
         HttpStatus.BAD_REQUEST,
       );
+    }
+  }
+
+  async scheduleEmail(email: string, subject: string, body: string) {
+    try {
+      await this.mailService.sendMail({
+        to: email,
+        subject: subject,
+        from: 'leonardo.adami@globalsys.com.br',
+        html: body,
+      });
+      return true;
+    } catch (error) {
+      return false;
     }
   }
 }
