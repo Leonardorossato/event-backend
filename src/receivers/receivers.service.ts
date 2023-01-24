@@ -26,46 +26,6 @@ export class ReceiversService {
     }
   }
 
-  async createEventByWhastApp(dto: CreateReceiverDto) {
-    try {
-      const result = await axios.post(
-        `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-messages`,
-        {
-          ...dto,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-      return result.data;
-    } catch (error) {
-      throw new HttpException(
-        'Error ao create a event for whatsapp',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-
-  async createEventByEmail(dto: CreateReceiverDto) {
-    try {
-      const result = await axios.post(
-        `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-messages`,
-        {
-          ...dto,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-      return result.data;
-    } catch (error) {
-      throw new HttpException(
-        'Error ao create a event for whatsapp',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-
   async findAll() {
     try {
       const receiver = await this.receiverRepository.find();
@@ -85,17 +45,16 @@ export class ReceiversService {
   async update(id: number, dto: UpdateReceiverDto) {
     try {
       const receiver = await this.receiverRepository.findOneBy({ id: id });
-      if (!receiver)
+      if (!receiver?.id)
         throw new HttpException(
-          `Error finding receiver wtih id: ${id}`,
+          `Error finding receiver with id: ${id}`,
           HttpStatus.NOT_FOUND,
         );
-      await this.receiverRepository.update(receiver, dto);
+      await this.receiverRepository.update(id, {...dto});
       return { message: 'Successfully updated a receiver' };
     } catch (error) {
-      const err = error as UpdateValuesMissingError;
       throw new HttpException(
-        { message: 'Error updating a receiver', error: err.message },
+        'Error updating a receiver',
         HttpStatus.BAD_REQUEST,
       );
     }
