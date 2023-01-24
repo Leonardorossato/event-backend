@@ -6,6 +6,7 @@ import sgMail from '@sendgrid/mail';
 import axios from 'axios';
 import { Repository } from 'typeorm';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
+import { CreateEventEmailDto } from './dto/create-evento-email.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
 import { Announcement } from './entities/announcement.entity';
 
@@ -51,10 +52,10 @@ export class AnnouncementsService {
     }
   }
 
-  async createEventByEmail(email: string, subject: string, body: string) {
+  async createEventByEmail(dto: CreateEventEmailDto) {
     try {
       const user = await this.announcementRepository.findOneBy({
-        creatorEmail: email,
+        creatorEmail: dto.email,
       });
       if (!user) {
         throw new HttpException('Email not exists', HttpStatus.NOT_FOUND);
@@ -63,13 +64,13 @@ export class AnnouncementsService {
       await sgMail.setApiKey(apiKey);
 
       const message = {
-        to: email,
-        subject: subject,
-        from: 'leonardo.adami@globalsys.com.br',
-        html: body,
+        to: dto.email,
+        subject: dto.subject,
+        text: dto.text,
+        body: dto.body,
+        from: 'no-reply <leonardo.adami@globalsys.com.br>',
+        html: '<h1> Teste aqui </h1>',
       };
-
-      await this.scheduleEmail(message.to,message.subject, message.html);
 
       await sgMail
         .send(message)
@@ -158,7 +159,7 @@ export class AnnouncementsService {
       await this.mailService.sendMail({
         to: email,
         subject: subject,
-        from: 'leonardo.adami@globalsys.com.br',
+        from: '	lolzinhobr1000@gmail.com',
         html: body,
       });
       return true;
