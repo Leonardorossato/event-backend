@@ -9,4 +9,7 @@ export class CreateEventEmailDto {
 
   @ApiProperty()
   body!: string;
+
+  @ApiProperty()
+  text!: string;
 }
