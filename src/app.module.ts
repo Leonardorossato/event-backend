@@ -34,16 +34,17 @@ import { AnnouncementsModule } from './announcements/announcements.module';
     MailerModule.forRootAsync({
       useFactory: async (config: ConfigService) => ({
         transport: {
-          host: config.get('API_HOST'),
-          secure: false,
+          host: config.get('SMTP_HOST'),
+          secure: true,
+          port: config.get('SMTP_PORT'),
           auth: {
-            user: config.get('API_USER'),
-            pass: config.get('API_PASSWORD'),
+            user: config.get('SMTP_USERNAME'),
+            pass: config.get('SMTP_PASSWORD'),
           },
         },
         defaults: {
-          from: config.get('API_MAIL_FROM')
-        }
+          from: config.get('SMTP_DEFALUT'),
+        },
       }),
       inject: [ConfigService],
     }),
