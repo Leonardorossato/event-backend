@@ -43,7 +43,7 @@ import { AnnouncementsModule } from './announcements/announcements.module';
           },
         },
         defaults: {
-          from: config.get('SMTP_DEFALUT'),
+          from: `No Reply" <${config.get('SMTP_DEFALUT')}>`,
         },
       }),
       inject: [ConfigService],

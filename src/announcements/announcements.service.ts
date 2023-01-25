@@ -4,6 +4,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import sgMail from '@sendgrid/mail';
 import axios from 'axios';
+import { map } from 'rxjs';
 import { Repository } from 'typeorm';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 import { CreateEventEmailDto } from './dto/create-evento-email.dto';
@@ -63,25 +64,19 @@ export class AnnouncementsService {
       const apiKey = process.env.API_KEY as string;
       await sgMail.setApiKey(apiKey);
 
-      const message = {
-        to: dto.email,
+      const html = `<html><body><h1>Olá ${dto.email}</h1>
+      <p>enviado: ${dto.body} </p>
+      </body></html>`;
+
+      const res =await this.mailService.sendMail({
+        to: user.creatorEmail,
+        from: 'leonardo.adami@globalsys.com.br',
         subject: dto.subject,
         text: dto.text,
-        body: dto.body,
-        from: 'no-reply <leonardo.adami@globalsys.com.br>',
-        html: '<h1> Teste aqui </h1>',
-      };
+        html: html,
+      });
 
-      await sgMail
-        .send(message)
-        .then((response) => {
-          return response[0].body;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-      const result = await this.mailService.sendMail(message);
-      return result;
+      return res
     } catch (error) {
       throw new HttpException(
         'Error to create a event for email',
@@ -151,20 +146,6 @@ export class AnnouncementsService {
         `Error to remove announcement with id: ${id}`,
         HttpStatus.BAD_REQUEST,
       );
-    }
-  }
-
-  async scheduleEmail(email: string, subject: string, body: string) {
-    try {
-      await this.mailService.sendMail({
-        to: email,
-        subject: subject,
-        from: '	lolzinhobr1000@gmail.com',
-        html: body,
-      });
-      return true;
-    } catch (error) {
-      return false;
     }
   }
 }
