@@ -1,12 +1,19 @@
 import {
-  Body, Controller, Delete, Get, Param, Post, Put,
-  Query
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import * as dotenv from 'dotenv';
 import { Roles } from 'nest-keycloak-connect';
 import { AnnouncementsService } from './announcements.service';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
+import { CreateEventEmailDto } from './dto/create-evento-email.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
 dotenv.config({ path: './.env' });
 @ApiTags('Comunicados')
@@ -27,18 +34,10 @@ export class AnnouncementsController {
     return await this.announcementsService.createEventByWhastApp(dto);
   }
 
-  @Get('/event-email')
+  @Post('/event-email')
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
-  async createEventByEmail(
-    @Query('email') email: string,
-    @Query('body') body: string,
-    @Query('subject') subject: string,
-  ) {
-    return await this.announcementsService.createEventByEmail(
-      email,
-      body,
-      subject,
-    );
+  async createEventByEmail(@Body() dto: CreateEventEmailDto) {
+    return await this.announcementsService.createEventByEmail(dto);
   }
 
   @Get()

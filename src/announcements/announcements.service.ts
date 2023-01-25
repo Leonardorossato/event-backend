@@ -2,13 +2,15 @@ import { Receiver } from '@/receivers/entities/receiver.entity';
 import { MailerService } from '@nestjs-modules/mailer';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import sgMail from '@sendgrid/mail';
 import axios from 'axios';
 import { Repository } from 'typeorm';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
+import { CreateEventEmailDto } from './dto/create-evento-email.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
 import { Announcement } from './entities/announcement.entity';
-
+import nodemailer from '@nestjs-modules/mailer';
+import dotenv from 'dotenv';
+dotenv.config({ path: './.env' });
 @Injectable()
 export class AnnouncementsService {
   constructor(
@@ -51,34 +53,21 @@ export class AnnouncementsService {
     }
   }
 
-  async createEventByEmail(email: string, subject: string, body: string) {
+  async createEventByEmail(dto: CreateEventEmailDto) {
     try {
       const user = await this.announcementRepository.findOneBy({
-        creatorEmail: email,
+        creatorEmail: dto.email,
       });
       if (!user) {
-        throw new HttpException('Email not exists', HttpStatus.NOT_FOUND);
+        throw new HttpException('Email not found', HttpStatus.NOT_FOUND);
       }
-      const apiKey = process.env.API_KEY as string;
-      await sgMail.setApiKey(apiKey);
-
       const message = {
-        to: email,
-        subject: subject,
-        from: 'leonardo.adami@globalsys.com.br',
-        html: body,
+        to: user.creatorEmail,
+        text: dto.text,
+        subject: dto.subject,
+        from: 'noreply@example.com',
+        html: '<h1>Ola Mundo</h1>',
       };
-
-      await this.scheduleEmail(message.to,message.subject, message.html);
-
-      await sgMail
-        .send(message)
-        .then((response) => {
-          return response[0].body;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
       const result = await this.mailService.sendMail(message);
       return result;
     } catch (error) {
@@ -150,20 +139,6 @@ export class AnnouncementsService {
         `Error to remove announcement with id: ${id}`,
         HttpStatus.BAD_REQUEST,
       );
-    }
-  }
-
-  async scheduleEmail(email: string, subject: string, body: string) {
-    try {
-      await this.mailService.sendMail({
-        to: email,
-        subject: subject,
-        from: 'leonardo.adami@globalsys.com.br',
-        html: body,
-      });
-      return true;
-    } catch (error) {
-      return false;
     }
   }
 }
