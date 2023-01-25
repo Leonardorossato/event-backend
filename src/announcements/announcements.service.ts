@@ -55,35 +55,26 @@ export class AnnouncementsService {
 
   async createEventByEmail(dto: CreateEventEmailDto) {
     try {
-      const email = await this.announcementRepository.findOneBy({creatorEmail: dto.email});
-
-      const result = await this.mailService.sendMail({
-        to: dto.email,
-        text: 'test',
-        subject: 'fdsfsf',
+      const user = await this.announcementRepository.findOneBy({
+        creatorEmail: dto.email,
+      });
+      if (!user) {
+        throw new HttpException('Email not found', HttpStatus.NOT_FOUND);
+      }
+      const message = {
+        to: user.creatorEmail,
+        text: dto.text,
+        subject: dto.subject,
         from: 'noreply@example.com',
         html: '<h1>Ola Mundo</h1>',
-      });
+      };
+      const result = await this.mailService.sendMail(message);
       return result;
     } catch (error) {
       throw new HttpException(
         'Error to create a event for email',
         HttpStatus.BAD_REQUEST,
       );
-    }
-  }
-
-  async scheduleEmail(email: string, subject: string, body: string) {
-    try {
-      await this.mailService.sendMail({
-        to: email,
-        subject: subject,
-        from: 'noreply@example.com',
-        html: body,
-      });
-      return true;
-    } catch (error) {
-      return false;
     }
   }
 

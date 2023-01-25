@@ -37,6 +37,7 @@ dotenv.config({ path: './.env' });
         transport: {
           host: config.get('MAIL_HOST'),
           secure: false,
+          service: 'gmail',
           port: config.get('MAIL_USER'),
           auth: {
             user: config.get('MAIL_USER'),
