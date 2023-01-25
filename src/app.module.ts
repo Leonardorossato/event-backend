@@ -15,7 +15,8 @@ import { KeycloakConfigService } from './keycloak/keycloak.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgresSqlConnection } from './config/ormconfig';
 import { AnnouncementsModule } from './announcements/announcements.module';
-
+import dotenv from 'dotenv';
+dotenv.config({ path: './.env' });
 @Module({
   imports: [
     ReceiversModule,
@@ -34,16 +35,16 @@ import { AnnouncementsModule } from './announcements/announcements.module';
     MailerModule.forRootAsync({
       useFactory: async (config: ConfigService) => ({
         transport: {
-          host: config.get('SMTP_HOST'),
-          secure: true,
-          port: config.get('SMTP_PORT'),
+          host: config.get('MAIL_HOST'),
+          secure: false,
+          port: config.get('MAIL_USER'),
           auth: {
-            user: config.get('SMTP_USERNAME'),
-            pass: config.get('SMTP_PASSWORD'),
+            user: config.get('MAIL_USER'),
+            pass: config.get('MAIL_PASS'),
           },
         },
         defaults: {
-          from: `No Reply" <${config.get('SMTP_DEFALUT')}>`,
+          from: `No Reply" <${config.get('MAIL_FROM')}>`,
         },
       }),
       inject: [ConfigService],
