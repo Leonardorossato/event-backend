@@ -2,15 +2,15 @@ import { Receiver } from '@/receivers/entities/receiver.entity';
 import { MailerService } from '@nestjs-modules/mailer';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import sgMail from '@sendgrid/mail';
 import axios from 'axios';
-import { map } from 'rxjs';
 import { Repository } from 'typeorm';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 import { CreateEventEmailDto } from './dto/create-evento-email.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
 import { Announcement } from './entities/announcement.entity';
-
+import nodemailer from '@nestjs-modules/mailer';
+import dotenv from 'dotenv';
+dotenv.config({ path: './.env' });
 @Injectable()
 export class AnnouncementsService {
   constructor(
@@ -55,33 +55,35 @@ export class AnnouncementsService {
 
   async createEventByEmail(dto: CreateEventEmailDto) {
     try {
-      const user = await this.announcementRepository.findOneBy({
-        creatorEmail: dto.email,
+      const email = await this.announcementRepository.findOneBy({creatorEmail: dto.email});
+
+      const result = await this.mailService.sendMail({
+        to: dto.email,
+        text: 'test',
+        subject: 'fdsfsf',
+        from: 'noreply@example.com',
+        html: '<h1>Ola Mundo</h1>',
       });
-      if (!user) {
-        throw new HttpException('Email not exists', HttpStatus.NOT_FOUND);
-      }
-      const apiKey = process.env.API_KEY as string;
-      await sgMail.setApiKey(apiKey);
-
-      const html = `<html><body><h1>Olá ${dto.email}</h1>
-      <p>enviado: ${dto.body} </p>
-      </body></html>`;
-
-      const res =await this.mailService.sendMail({
-        to: user.creatorEmail,
-        from: 'leonardo.adami@globalsys.com.br',
-        subject: dto.subject,
-        text: dto.text,
-        html: html,
-      });
-
-      return res
+      return result;
     } catch (error) {
       throw new HttpException(
         'Error to create a event for email',
         HttpStatus.BAD_REQUEST,
       );
+    }
+  }
+
+  async scheduleEmail(email: string, subject: string, body: string) {
+    try {
+      await this.mailService.sendMail({
+        to: email,
+        subject: subject,
+        from: 'noreply@example.com',
+        html: body,
+      });
+      return true;
+    } catch (error) {
+      return false;
     }
   }
 

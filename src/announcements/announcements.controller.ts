@@ -36,8 +36,8 @@ export class AnnouncementsController {
 
   @Post('/event-email')
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
-  async createEventByEmail(@Body() dto: CreateEventEmailDto) {
-    return await this.announcementsService.createEventByEmail(dto);
+  async createEventByEmail(@Query('email') email: string) {
+    return await this.announcementsService.createEventByEmail(email);
   }
 
   @Get()
