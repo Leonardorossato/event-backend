@@ -29,5 +29,5 @@ export class Events {
   announcementId!: number;
 
   @CreateDateColumn({ type: Date })
-  createdAt!: Date;
+  createdAt?: Date;
 }
