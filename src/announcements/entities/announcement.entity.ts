@@ -9,10 +9,7 @@ import {
 export class Announcement {
   @PrimaryGeneratedColumn()
   id!: number;
-
-  @Column({ nullable: false })
-  receiverId!: number;
-
+  
   @Column({ nullable: false, type: 'varchar', length: 255 })
   creatorAnnouncements!: string;
 
