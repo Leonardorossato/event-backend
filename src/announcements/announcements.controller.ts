@@ -19,7 +19,6 @@ import * as dotenv from 'dotenv';
 import { Roles } from 'nest-keycloak-connect';
 import { AnnouncementsService } from './announcements.service';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
-import { CreateEventEmailDto } from './dto/create-evento-email.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
 dotenv.config({ path: './.env' });
 @ApiTags('Comunicados')
@@ -33,23 +32,7 @@ export class AnnouncementsController {
   async create(@Body() createAnnouncementDto: CreateAnnouncementDto) {
     return await this.announcementsService.create(createAnnouncementDto);
   }
-
-  @Post('/event-whatsApp')
-  @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
-  async createEventWhastApp(@Body() dto: CreateAnnouncementDto) {
-    return await this.announcementsService.createEventByWhastApp(dto);
-  }
-
-  @Post('/event-email')
-  @ApiOperation({
-    description:
-      'You can pass a one email or a multiple email: ["testeaqui@gmail, olmundo@gmail.com"]',
-  })
-  @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
-  async createEventByEmail(@Body() dto: CreateEventEmailDto) {
-    return await this.announcementsService.createEventByEmail(dto);
-  }
-
+  
   @Get()
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-read`] })
   async findAll() {
