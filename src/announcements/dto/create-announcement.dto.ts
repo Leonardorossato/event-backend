@@ -4,27 +4,15 @@ export class CreateAnnouncementDto {
   @ApiProperty({ nullable: false })
   receiverId!: number;
 
-  @ApiProperty({
-    nullable: false,
-    type: String,
-    minLength: 3,
-    maxLength: 255,
-  })
-  creatorAnnouncement!: string;
+  @ApiProperty({ nullable: false, type: String })
+  creatorAnnouncements!: string;
 
-  @ApiProperty({
-    nullable: false,
-    type: String,
-    minLength: 3,
-    maxLength: 255,
-  })
-  creatorEmail!: string;
+  @ApiProperty({ nullable: false, type: String })
+  releasetTitle!: string;
 
-  @ApiProperty({
-    nullable: false,
-    type: String,
-    minLength: 3,
-    maxLength: 255,
-  })
-  communiqContent!: string;
+  @ApiProperty({ nullable: false, type: String })
+  creatorsEmail!: string;
+
+  @ApiProperty({ nullable: false, type: String })
+  communiquéContent!: string;
 }
