@@ -27,8 +27,16 @@ export class EventsService {
     }
   }
 
-  findAll() {
-    return `This action returns all events`;
+  async findAll(): Promise<Event[]> {
+    try {
+      const events = await this.eventRepository.find();
+      return events;
+    } catch (error) {
+      throw new HttpException(
+        'Error to find all events',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   findOne(id: number) {
