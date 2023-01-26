@@ -41,7 +41,10 @@ export class AnnouncementsController {
   }
 
   @Post('/event-email')
-  @ApiOperation({ description: 'You can pass a one email or a multiple email: ["testeaqui@gmail, olmundo@gmail.com"]' })
+  @ApiOperation({
+    description:
+      'You can pass a one email or a multiple email: ["testeaqui@gmail, olmundo@gmail.com"]',
+  })
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
   async createEventByEmail(@Body() dto: CreateEventEmailDto) {
     return await this.announcementsService.createEventByEmail(dto);
