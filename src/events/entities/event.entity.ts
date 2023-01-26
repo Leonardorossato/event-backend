@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Event {
+export class Events {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -27,9 +27,6 @@ export class Event {
 
   @Column({ name: 'announcementId' })
   announcementId!: number;
-
-  @Column({type: 'varchar', unique: true, nullable: false})
-  email!: string[];
 
   @CreateDateColumn({ type: Date })
   createdAt!: Date;
