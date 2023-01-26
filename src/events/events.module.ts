@@ -4,9 +4,10 @@ import { EventsController } from './events.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Receiver } from '@/receivers/entities/receiver.entity';
 import { Announcement } from '@/announcements/entities/announcement.entity';
+import { Events } from './entities/events.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Event, Receiver, Announcement])],
+  imports: [TypeOrmModule.forFeature([Events, Receiver, Announcement])],
   controllers: [EventsController],
   providers: [EventsService],
 })
