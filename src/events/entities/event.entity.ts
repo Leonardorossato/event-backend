@@ -19,14 +19,14 @@ export class Events {
   @JoinColumn({ name: 'receiverId' })
   receiver!: Receiver;
 
-  @Column({ name: 'receiverId' })
+  @Column({ nullable: false })
   receiverId!: number;
 
   @ManyToMany(() => Announcement)
   @JoinColumn({ name: 'announcementId' })
   announcements!: Announcement;
 
-  @Column({ name: 'announcementId' })
+  @Column({ nullable: false })
   announcementId!: number;
 
   @CreateDateColumn({ type: Date })
