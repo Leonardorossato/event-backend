@@ -15,9 +15,10 @@ import { KeycloakConfigService } from './keycloak/keycloak.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostgresSqlConnection } from './config/ormconfig';
 import { AnnouncementsModule } from './announcements/announcements.module';
-import { MailModule } from './mail/mail.module';
 import dotenv from 'dotenv';
 dotenv.config({ path: './.env' });
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import path from 'path';
 @Module({
   imports: [
     ReceiversModule,
@@ -50,7 +51,6 @@ dotenv.config({ path: './.env' });
       }),
       inject: [ConfigService],
     }),
-    MailModule,
   ],
   providers: [
     {
