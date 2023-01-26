@@ -8,7 +8,13 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiPropertyOptional,
+  ApiTags,
+} from '@nestjs/swagger';
 import * as dotenv from 'dotenv';
 import { Roles } from 'nest-keycloak-connect';
 import { AnnouncementsService } from './announcements.service';
@@ -35,6 +41,7 @@ export class AnnouncementsController {
   }
 
   @Post('/event-email')
+  @ApiOperation({ description: 'You can pass a one email or a multiple email: ["testeaqui@gmail, olmundo@gmail.com"]' })
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
   async createEventByEmail(@Body() dto: CreateEventEmailDto) {
     return await this.announcementsService.createEventByEmail(dto);
