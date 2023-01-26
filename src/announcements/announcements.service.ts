@@ -1,14 +1,10 @@
-import { Receiver } from '@/receivers/entities/receiver.entity';
-import { MailerService } from '@nestjs-modules/mailer';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import axios from 'axios';
-import dotenv from 'dotenv';
 import { Repository } from 'typeorm';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
 import { Announcement } from './entities/announcement.entity';
-dotenv.config({ path: './.env' });
+
 @Injectable()
 export class AnnouncementsService {
   constructor(
@@ -23,26 +19,6 @@ export class AnnouncementsService {
     } catch (error) {
       throw new HttpException(
         'Erro to create a announcement',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-
-  async createEventByWhastApp(dto: CreateAnnouncementDto) {
-    try {
-      const result = await axios.post(
-        `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-messages`,
-        {
-          ...dto,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-      return result.data;
-    } catch (error) {
-      throw new HttpException(
-        'Erro in create a event for whatsapp',
         HttpStatus.BAD_REQUEST,
       );
     }
