@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -14,16 +15,16 @@ export class Events {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @OneToMany(() => Receiver, (receiver) => receiver.id)
+  @ManyToMany(() => Receiver)
   @JoinColumn({ name: 'receiverId' })
-  receiver?: Receiver;
+  receiver!: Receiver;
 
   @Column({ name: 'receiverId' })
   receiverId!: number;
 
-  @OneToMany(() => Announcement, (announcement) => announcement.id)
+  @ManyToMany(() => Announcement)
   @JoinColumn({ name: 'announcementId' })
-  announcements?: Announcement;
+  announcements!: Announcement;
 
   @Column({ name: 'announcementId' })
   announcementId!: number;

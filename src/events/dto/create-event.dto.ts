@@ -2,8 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateEventDTO {
   @ApiProperty({ nullable: false })
-  receiverId!: number;
+  name!: string;
 
   @ApiProperty({ nullable: false })
-  announcementId!: number;
+  receiverId?: number;
+
+  @ApiProperty({ nullable: false })
+  announcementId?: number;
 }
