@@ -55,18 +55,12 @@ export class AnnouncementsService {
 
   async createEventByEmail(dto: CreateEventEmailDto) {
     try {
-      const user = await this.announcementRepository.findOneBy({
-        creatorEmail: dto.email,
-      });
-      if (!user) {
-        throw new HttpException('Email not found', HttpStatus.NOT_FOUND);
-      }
       const message = {
-        to: user.creatorEmail,
+        to: [dto.email],
         text: dto.text,
         subject: dto.subject,
         from: 'noreply@example.com',
-        html: '<h1>Ola Mundo</h1>',
+        html: '<h1>Teste aqui</h1>',
       };
       const result = await this.mailService.sendMail(message);
       return result;
