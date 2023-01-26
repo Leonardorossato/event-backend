@@ -1,12 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateEventDto {
-  @ApiProperty({ type: Number })
+export class CreateEventDTO {
+  @ApiProperty({ nullable: false })
   receiverId!: number;
 
-  @ApiProperty({ type: Number })
+  @ApiProperty({ nullable: false })
   announcementId!: number;
-
-  @ApiProperty({ type: [String], nullable: false })
-  email!: string[];
 }
