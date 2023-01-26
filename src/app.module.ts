@@ -18,6 +18,7 @@ import { AnnouncementsModule } from './announcements/announcements.module';
 import dotenv from 'dotenv';
 dotenv.config({ path: './.env' });
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { EventsModule } from './events/events.module';
 import path from 'path';
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import path from 'path';
       }),
       inject: [ConfigService],
     }),
+    EventsModule,
   ],
   providers: [
     {
