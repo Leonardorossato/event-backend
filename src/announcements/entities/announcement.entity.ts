@@ -10,17 +10,20 @@ export class Announcement {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({nullable: false})
-  receiverId!: number; 
+  @Column({ nullable: false })
+  receiverId!: number;
 
   @Column({ nullable: false, type: 'varchar', length: 255 })
-  creatorAnnouncement!: string;
+  creatorAnnouncements!: string;
+
+  @Column({ nullable: false, type: 'varchar' })
+  releasetTitle!: string;
 
   @Column({ nullable: false, unique: true, type: 'varchar', length: 255 })
-  creatorEmail!: string;
+  creatorsEmail!: string;
 
   @Column({ nullable: false, type: 'varchar', length: 255 })
-  communiqContent!: string;
+  communiquéContent!: string;
 
   @CreateDateColumn({ type: Date })
   createdAt?: Date;
