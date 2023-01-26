@@ -3,22 +3,17 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
+import dotenv from 'dotenv';
 import { Repository } from 'typeorm';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
-import { CreateEventEmailDto } from './dto/create-evento-email.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
 import { Announcement } from './entities/announcement.entity';
-import nodemailer from '@nestjs-modules/mailer';
-import dotenv from 'dotenv';
 dotenv.config({ path: './.env' });
 @Injectable()
 export class AnnouncementsService {
   constructor(
     @InjectRepository(Announcement)
     private readonly announcementRepository: Repository<Announcement>,
-    @InjectRepository(Receiver)
-    private readonly receiverRepository: Repository<Receiver>,
-    private readonly mailService: MailerService,
   ) {}
   async create(dto: CreateAnnouncementDto) {
     try {
@@ -53,25 +48,6 @@ export class AnnouncementsService {
     }
   }
 
-  async createEventByEmail(dto: CreateEventEmailDto) {
-    try {
-      const message = {
-        to: [dto.email],
-        text: dto.text,
-        subject: dto.subject,
-        from: 'noreply@example.com',
-        html: '<h1>Teste aqui</h1>',
-      };
-      const result = await this.mailService.sendMail(message);
-      return result;
-    } catch (error) {
-      throw new HttpException(
-        'Error to create a event for email',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-
   async findAll() {
     try {
       const announcement = await this.announcementRepository.find();
@@ -90,14 +66,6 @@ export class AnnouncementsService {
 
   async update(id: number, dto: UpdateAnnouncementDto) {
     try {
-      const receiver = await this.announcementRepository.findOneBy({
-        id: dto.receiverId,
-      });
-      if (!receiver)
-        throw new HttpException(
-          `Error to find receiver with id: ${dto.receiverId}`,
-          HttpStatus.NOT_FOUND,
-        );
       const announcement = await this.announcementRepository.findOneBy({
         id: id,
       });
