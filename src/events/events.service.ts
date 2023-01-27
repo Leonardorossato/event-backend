@@ -53,7 +53,7 @@ export class EventsService {
         );
       }
       const result = await axios.post(
-        `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-messages`,
+        `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-text`,
         {
           ...dto,
         },
