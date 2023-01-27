@@ -375,6 +375,9 @@ Ex: http://localhost:7000/api#/Eventos/EventsController_createEventBySMS
 - If the user tries to access this route without permission by keycloak, it will return error of
   permission.
 
+## Erros Twilio API
+- If user number is wrong, it will return a error;
+
 ## Route to get all events:
 
 Ex: http://localhost:7000/api#/Eventos/EventsController_findAll
