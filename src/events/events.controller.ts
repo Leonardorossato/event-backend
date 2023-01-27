@@ -11,6 +11,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import dotenv from 'dotenv';
 import { Roles } from 'nest-keycloak-connect';
 import { CreateEventEmailDTO } from './dto/create-event-email.dto';
+import { CreateEventSMSDTO } from './dto/create-event-sms.dto';
 import { CreateEventWhatsAppDTO } from './dto/create-event-whatsapp.dto';
 import { CreateEventDTO } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
@@ -39,6 +40,12 @@ export class EventsController {
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
   async createEventByWhatsApp(@Body() dto: CreateEventWhatsAppDTO) {
     return await this.eventsService.create(dto);
+  }
+
+  @Post('event-sms')
+  @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
+  async createEventBySMS(@Body() dto: CreateEventSMSDTO) {
+    return await this.eventsService.createEventSMS(dto);
   }
 
   @Get()
