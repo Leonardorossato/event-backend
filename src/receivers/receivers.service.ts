@@ -38,7 +38,19 @@ export class ReceiversService {
   }
 
   async findOne(id: number) {
-    return `This action returns a #${id} receiver`;
+    try {
+      const receiver = await this.receiverRepository.findOne({
+        where: { id: id },
+      });
+      if (!receiver)
+        throw new HttpException(
+          `Error finding receiver with id: ${id}`,
+          HttpStatus.NOT_FOUND,
+        );
+      return receiver;
+    } catch (error) {
+      throw new HttpException('Error receiver not found', HttpStatus.NOT_FOUND);
+    }
   }
 
   async update(id: number, dto: UpdateReceiverDto) {
@@ -49,7 +61,7 @@ export class ReceiversService {
           `Error finding receiver with id: ${id}`,
           HttpStatus.NOT_FOUND,
         );
-      await this.receiverRepository.update(id, {...dto});
+      await this.receiverRepository.update(id, { ...dto });
       return { message: 'Successfully updated a receiver' };
     } catch (error) {
       throw new HttpException(

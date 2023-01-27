@@ -118,8 +118,15 @@ export class EventsService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} event`;
+  async findOne(id: number) {
+    try {
+      const event = await this.eventRepository.findOne({ where: { id: id } });
+      if (!event)
+        throw new HttpException(`Event not found: ${id}`, HttpStatus.NOT_FOUND);
+      return event;
+    } catch (error) {
+      throw new HttpException('Error to find a event', HttpStatus.BAD_REQUEST);
+    }
   }
 
   async update(id: number, dto: UpdateEventDto) {

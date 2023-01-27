@@ -37,7 +37,22 @@ export class AnnouncementsService {
   }
 
   async findOne(id: number) {
-    return `This action returns a #${id} announcement`;
+    try {
+      const announcement = await this.announcementRepository.findOne({
+        where: { id: id },
+      });
+      if (!announcement)
+        throw new HttpException(
+          `Error to find announcement with id: ${id}`,
+          HttpStatus.NOT_FOUND,
+        );
+      return announcement;
+    } catch (error) {
+      throw new HttpException(
+        'Announcement not exist',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   async update(id: number, dto: UpdateAnnouncementDto) {

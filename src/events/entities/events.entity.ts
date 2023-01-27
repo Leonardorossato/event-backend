@@ -15,14 +15,14 @@ export class Events {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @ManyToMany(() => Receiver)
+  @OneToMany(() => Receiver, (receiver) => receiver.id)
   @JoinColumn({ name: 'receiverId' })
   receiver!: Receiver;
 
   @Column({ nullable: false })
   receiverId!: number;
 
-  @ManyToMany(() => Announcement)
+  @OneToMany(() => Announcement, (announcement) => announcement.id)
   @JoinColumn({ name: 'announcementId' })
   announcements!: Announcement;
 
