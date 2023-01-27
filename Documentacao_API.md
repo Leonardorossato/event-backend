@@ -167,7 +167,7 @@ Parametro: id: 1
 - If the user tries to access this route without permission by keycloak, it will return error of
   permission.
 
-## Rota para deletar um recebedor:
+## Rote to delete a receiver:
 
 http://localhost:7000/api#/Recebedores/RecebedoresController_remove
 EX:
@@ -209,7 +209,7 @@ Ex:
 - If the user tries to access this route without permission by keycloak, it will return error of
   permission.
 
-## Rota para criar um Comunicado:
+## Rote to create a Announcement:
 
 http://localhost:7000/api#/Comunicados/ComunicadosController_create
 
@@ -252,19 +252,21 @@ Parametro: id: 1
 - If the Id passed by the parameter does not exist, it will return a status error 404;
 - If the user tries to access this route without permission by keycloak, it will return permission error.
 
-## Create a event by Email:
+## Route to update an announcement by Id:
 
-EX: http://localhost:7000/api#/Comunicados/AnnouncementsController_createEventByEmail
+Ex:http://localhost:7000/api#/Comunicados/AnnouncementsController_update
+
+Param: id: 1
 
 ```
 {
-  "receiverId": 0,
-  "creatorAnnouncement": "string",
-  "creatorEmail": "string",
-  "communiqContent": "string"
+  "creatorAnnouncements": "string",
+  "releasetTitle": "string",
+  "creatorsEmail": "string",
+  "communiquéContent": "string"
 }
 ```
 
-- If the user passes the correct data in the body, it returns status 200 Ok;
-- If the user passes incomplete data in the body, it returns status 404 error;
+- If you have the Id of the announcement and all fields in body are correct, it will return status 200 Ok, with the announcement updated in the system;
+- If the Id passed by the parameter does not exist, it will return a status error 404;
 - If the user tries to access this route without permission by keycloak, it will return permission error.

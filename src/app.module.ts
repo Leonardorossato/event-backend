@@ -17,6 +17,9 @@ import { PostgresSqlConnection } from './config/ormconfig';
 import { AnnouncementsModule } from './announcements/announcements.module';
 import dotenv from 'dotenv';
 dotenv.config({ path: './.env' });
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { EventsModule } from './events/events.module';
+import path from 'path';
 @Module({
   imports: [
     ReceiversModule,
@@ -37,8 +40,7 @@ dotenv.config({ path: './.env' });
         transport: {
           host: config.get('MAIL_HOST'),
           secure: false,
-          service: 'gmail',
-          port: config.get('MAIL_USER'),
+          port: config.get('MAIL_PORT'),
           auth: {
             user: config.get('MAIL_USER'),
             pass: config.get('MAIL_PASS'),
@@ -50,6 +52,7 @@ dotenv.config({ path: './.env' });
       }),
       inject: [ConfigService],
     }),
+    EventsModule,
   ],
   providers: [
     {

@@ -1,24 +1,15 @@
-import { Receiver } from '@/receivers/entities/receiver.entity';
-import { MailerService } from '@nestjs-modules/mailer';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import axios from 'axios';
 import { Repository } from 'typeorm';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
-import { CreateEventEmailDto } from './dto/create-evento-email.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
 import { Announcement } from './entities/announcement.entity';
-import nodemailer from '@nestjs-modules/mailer';
-import dotenv from 'dotenv';
-dotenv.config({ path: './.env' });
+
 @Injectable()
 export class AnnouncementsService {
   constructor(
     @InjectRepository(Announcement)
     private readonly announcementRepository: Repository<Announcement>,
-    @InjectRepository(Receiver)
-    private readonly receiverRepository: Repository<Receiver>,
-    private readonly mailService: MailerService,
   ) {}
   async create(dto: CreateAnnouncementDto) {
     try {
@@ -28,51 +19,6 @@ export class AnnouncementsService {
     } catch (error) {
       throw new HttpException(
         'Erro to create a announcement',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-
-  async createEventByWhastApp(dto: CreateAnnouncementDto) {
-    try {
-      const result = await axios.post(
-        `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-messages`,
-        {
-          ...dto,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-      return result.data;
-    } catch (error) {
-      throw new HttpException(
-        'Erro in create a event for whatsapp',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-
-  async createEventByEmail(dto: CreateEventEmailDto) {
-    try {
-      const user = await this.announcementRepository.findOneBy({
-        creatorEmail: dto.email,
-      });
-      if (!user) {
-        throw new HttpException('Email not found', HttpStatus.NOT_FOUND);
-      }
-      const message = {
-        to: user.creatorEmail,
-        text: dto.text,
-        subject: dto.subject,
-        from: 'noreply@example.com',
-        html: '<h1>Ola Mundo</h1>',
-      };
-      const result = await this.mailService.sendMail(message);
-      return result;
-    } catch (error) {
-      throw new HttpException(
-        'Error to create a event for email',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -96,14 +42,6 @@ export class AnnouncementsService {
 
   async update(id: number, dto: UpdateAnnouncementDto) {
     try {
-      const receiver = await this.announcementRepository.findOneBy({
-        id: dto.receiverId,
-      });
-      if (!receiver)
-        throw new HttpException(
-          `Error to find receiver with id: ${dto.receiverId}`,
-          HttpStatus.NOT_FOUND,
-        );
       const announcement = await this.announcementRepository.findOneBy({
         id: id,
       });
