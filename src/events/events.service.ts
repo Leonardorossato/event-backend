@@ -129,7 +129,7 @@ export class EventsService {
         );
       }
 
-      const response = await this.twilioService.client.messages
+      await this.twilioService.client.messages
         .create({
           body: dto.body,
           messagingServiceSid: process.env.TWILIO_SID,
@@ -142,7 +142,7 @@ export class EventsService {
         .catch((err) => {
           console.error(err);
         });
-      return response;
+      return {message: 'SMS successfully sent'};
     } catch (error) {
       throw new HttpException(
         'Erro in create a event for sms',
