@@ -5,7 +5,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
 import { Repository } from 'typeorm';
-import { CreateEventEmailDTO } from './dto/create-event-emaildto';
+import { CreateEventEmailDTO } from './dto/create-event-email.dto';
 import { CreateEventWhatsAppDTO } from './dto/create-event-whatsapp.dto';
 import { CreateEventDTO } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';

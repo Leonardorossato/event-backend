@@ -40,7 +40,7 @@ import path from 'path';
         transport: {
           host: config.get('MAIL_HOST'),
           secure: false,
-          port: config.get('MAIL_USER'),
+          port: config.get('MAIL_PORT'),
           auth: {
             user: config.get('MAIL_USER'),
             pass: config.get('MAIL_PASS'),
