@@ -377,6 +377,7 @@ Ex: http://localhost:7000/api#/Eventos/EventsController_createEventBySMS
 
 ## Erros Twilio API
 - If user number is wrong, it will return a error;
+- If the variables in .env are wrong, it will return a erro to.
 
 ## Route to get all events:
 
