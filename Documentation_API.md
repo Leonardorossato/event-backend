@@ -2,12 +2,12 @@
 
 Description: Integration system with API`s to create events and send them.
 
-Conteudo:
+### Contents:
 
 - Announcements;
 - Receivers;
 - Events;
-- Keycloak
+- Keycloak.
 
 # How To use the Keycloak:
 
