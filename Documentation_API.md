@@ -2,12 +2,13 @@
 
 Description: Integration system with API`s to create events and send them.
 
-Conteudo:
+### Contents:
 
 - Announcements;
 - Receivers;
 - Events;
-- Keycloak
+- Keycloak;
+- Twilio.
 
 # How To use the Keycloak:
 
@@ -45,6 +46,10 @@ Z-API is a RestFul service that provides an API that allows you to interact with
 ## MailTrap:
 
 Test, Send, Control your email infrastructure in one place. Start today - Sign Up free! Get your emails into customers' inboxes just in time.Test, Send, Control your email infrastructure in one place. Start today - Sign Up free! Get your emails into customers' inboxes just in time. Start today - Sign Up free! Free plan. Affordable pricing. Effortless maintenance. Trusted by 150k teams. Responsive support.
+
+## Twilio:
+
+Twilio makes sending and receiving SMS easy. Find the documentation, sample code, and developer tools you need to build exactly what you want, fast. We’ll handle the complexity of mobile carrier and global regulations. Let’s get building.
 
 ## Can connect with databases in the moment:
 
@@ -347,6 +352,32 @@ Ex: http://localhost:7000/api#/Eventos/EventsController_createEventByWhatsApp
 - If any field in the body of the release is wrong, it will return a status 404 error;
 - If the user tries to access this route without permission by keycloak, it will return error of
   permission.
+
+## Route to create an event By SMS:
+
+Ex: http://localhost:7000/api#/Eventos/EventsController_createEventBySMS
+
+```
+{
+  "receiverId": 1,
+  "announcementId": 1,
+  "body": "ola mundo, meu caro",
+  "to": "+5527996375994"
+}
+```
+
+- If all data is passed in the body, it will return status 201, that an event was successfully created and sended to user SMS(Cellphone);
+- If a field in the body like phone is wrong, it will return a error, caused by the z-api only
+  see the number passed like: +552799801257, with no spaces;
+- If the fields receiverId or annoucmentId they not exists in the system, it will return an error
+  with status 400, id was not found;
+- If any field in the body of the release is wrong, it will return a status 404 error;
+- If the user tries to access this route without permission by keycloak, it will return error of
+  permission.
+
+## Erros Twilio API
+- If user number is wrong, it will return a error;
+- If the variables in .env are wrong, it will return a erro to.
 
 ## Route to get all events:
 

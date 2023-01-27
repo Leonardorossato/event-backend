@@ -6,11 +6,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
 import { Repository } from 'typeorm';
 import { CreateEventEmailDTO } from './dto/create-event-email.dto';
+import { CreateEventSMSDTO } from './dto/create-event-sms.dto';
 import { CreateEventWhatsAppDTO } from './dto/create-event-whatsapp.dto';
 import { CreateEventDTO } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Events } from './entities/events.entity';
-
+import { TwilioService } from 'nestjs-twilio';
 @Injectable()
 export class EventsService {
   constructor(
@@ -21,6 +22,7 @@ export class EventsService {
     @InjectRepository(Announcement)
     private readonly announcementRepository: Repository<Announcement>,
     private readonly mailService: MailerService,
+    private readonly twilioService: TwilioService,
   ) {}
   async create(dto: CreateEventDTO) {
     try {
@@ -101,6 +103,49 @@ export class EventsService {
     } catch (error) {
       throw new HttpException(
         'Erro in create a event for email',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async createEventSMS(dto: CreateEventSMSDTO) {
+    try {
+      const receiver = await this.receiverRepository.findOneBy({
+        id: dto.receiverId,
+      });
+      if (!receiver) {
+        throw new HttpException(
+          `Error to find a receiver with id: ${dto.receiverId}`,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+      const announcement = await this.announcementRepository.findOneBy({
+        id: dto.announcementId,
+      });
+      if (!announcement) {
+        throw new HttpException(
+          `Error to find a announcement with id: ${dto.receiverId}`,
+          HttpStatus.NOT_FOUND,
+        );
+      }
+
+      await this.twilioService.client.messages
+        .create({
+          body: dto.body,
+          messagingServiceSid: process.env.TWILIO_SID,
+          from: '+13467066250',
+          to: dto.to,
+        })
+        .then((res) => {
+          console.log(res.sid);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      return {message: 'SMS successfully sent'};
+    } catch (error) {
+      throw new HttpException(
+        'Erro in create a event for sms',
         HttpStatus.BAD_REQUEST,
       );
     }
