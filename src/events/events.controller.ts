@@ -43,7 +43,7 @@ export class EventsController {
   @Post('event-whatsApp')
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
   async createEventByWhatsApp(@Body() dto: CreateEventWhatsAppDTO) {
-    return await this.eventsService.create(dto);
+    return await this.eventsService.createEventWhastApp(dto);
   }
 
   @Post('event-sms')
