@@ -176,24 +176,6 @@ export class EventsService {
 
   async update(id: number, dto: UpdateEventDto) {
     try {
-      const receiver = await this.receiverRepository.findOneBy({
-        id: dto.receiverId,
-      });
-      if (!receiver) {
-        throw new HttpException(
-          `Error to find a receiver with id: ${dto.receiverId}`,
-          HttpStatus.NOT_FOUND,
-        );
-      }
-      const announcement = await this.announcementRepository.findOneBy({
-        id: dto.announcementId,
-      });
-      if (!announcement) {
-        throw new HttpException(
-          `Error to find a announcement with id: ${dto.receiverId}`,
-          HttpStatus.NOT_FOUND,
-        );
-      }
       await this.eventRepository.update(id, dto);
       return { message: 'Event update successfully.' };
     } catch (error) {
