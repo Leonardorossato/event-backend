@@ -54,7 +54,7 @@ export class EventsService {
           HttpStatus.NOT_FOUND,
         );
       }
-      const result = await axios.post(
+      await axios.post(
         `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-text`,
         {
           ...dto,
@@ -63,7 +63,8 @@ export class EventsService {
           headers: { 'Content-Type': 'application/json' },
         },
       );
-      return result.data;
+      await this.eventRepository.save(dto);
+      return { message: 'Event created successfully and send to WhatsApp' };
     } catch (error) {
       throw new HttpException(
         'Erro in create a event for whatsapp',
@@ -98,8 +99,9 @@ export class EventsService {
         from: 'noreply@example.com',
         html: dto.html,
       };
-      const response = await this.mailService.sendMail(message);
-      return response;
+      await this.mailService.sendMail(message);
+      await this.eventRepository.save(dto);
+      return { message: 'Event successfully created and send to email.' };
     } catch (error) {
       throw new HttpException(
         'Erro in create a event for email',
@@ -142,7 +144,8 @@ export class EventsService {
         .catch((err) => {
           console.error(err);
         });
-      return {message: 'SMS successfully sent'};
+      await this.eventRepository.save(dto);
+      return { message: 'Event successfully created and send so SMS.' };
     } catch (error) {
       throw new HttpException(
         'Erro in create a event for sms',
