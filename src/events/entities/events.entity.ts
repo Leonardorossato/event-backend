@@ -15,6 +15,9 @@ export class Events {
   @PrimaryGeneratedColumn()
   id!: number;
 
+  @Column({nullable: false})
+  name!: string;
+
   @OneToMany(() => Receiver, (receiver) => receiver.id)
   @JoinColumn({ name: 'receiverId' })
   receiver!: Receiver;
