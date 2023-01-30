@@ -144,7 +144,7 @@ export class EventsService {
           body: dto.body,
           messagingServiceSid: process.env.TWILIO_SID,
           from: '+13467066250',
-          to: dto.to,
+          to: [dto.to].toString(),
         })
         .then((res) => {
           console.log(res.sid);
