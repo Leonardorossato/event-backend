@@ -8,6 +8,9 @@ export class CreateEventSMSDTO {
   announcementId!: number;
 
   @ApiProperty({ nullable: false })
+  name!: string;
+
+  @ApiProperty({ nullable: false })
   body!: string;
 
   @ApiProperty({ nullable: false })

@@ -54,16 +54,25 @@ export class EventsService {
           HttpStatus.NOT_FOUND,
         );
       }
-      const result = await axios.post(
-        `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-text`,
-        {
-          ...dto,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-      return result.data;
+      await axios
+        .post(
+          `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-menssages`,
+          {
+            ...dto,
+            phone: [dto.phone],
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+          },
+        )
+        .then((res) => {
+          return res;
+        })
+        .catch((err) => {
+          return err;
+        });
+      await this.eventRepository.save(dto);
+      return { message: 'Successfully created a event ans send to WhatsApp' };
     } catch (error) {
       throw new HttpException(
         'Erro in create a event for whatsapp',
@@ -98,8 +107,9 @@ export class EventsService {
         from: 'noreply@example.com',
         html: dto.html,
       };
-      const response = await this.mailService.sendMail(message);
-      return response;
+      await this.mailService.sendMail(message);
+      await this.eventRepository.save(dto);
+      return { message: 'Event successfully created and send to email.' };
     } catch (error) {
       throw new HttpException(
         'Erro in create a event for email',
@@ -142,7 +152,8 @@ export class EventsService {
         .catch((err) => {
           console.error(err);
         });
-      return {message: 'SMS successfully sent'};
+      await this.eventRepository.save(dto);
+      return { message: 'Event successfully created and send so SMS.' };
     } catch (error) {
       throw new HttpException(
         'Erro in create a event for sms',
@@ -176,24 +187,6 @@ export class EventsService {
 
   async update(id: number, dto: UpdateEventDto) {
     try {
-      const receiver = await this.receiverRepository.findOneBy({
-        id: dto.receiverId,
-      });
-      if (!receiver) {
-        throw new HttpException(
-          `Error to find a receiver with id: ${dto.receiverId}`,
-          HttpStatus.NOT_FOUND,
-        );
-      }
-      const announcement = await this.announcementRepository.findOneBy({
-        id: dto.announcementId,
-      });
-      if (!announcement) {
-        throw new HttpException(
-          `Error to find a announcement with id: ${dto.receiverId}`,
-          HttpStatus.NOT_FOUND,
-        );
-      }
       await this.eventRepository.update(id, dto);
       return { message: 'Event update successfully.' };
     } catch (error) {

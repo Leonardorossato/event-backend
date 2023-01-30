@@ -9,6 +9,9 @@ export class CreateEventEmailDTO {
   announcementId!: number;
 
   @ApiProperty({ nullable: false })
+  name!: string;
+
+  @ApiProperty({ nullable: false })
   @IsEmail()
   @IsNotEmpty()
   email!: string;
