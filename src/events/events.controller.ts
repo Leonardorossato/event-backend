@@ -41,6 +41,10 @@ export class EventsController {
   }
 
   @Post('event-whatsApp')
+  @ApiOperation({
+    description:
+      'You can pass more the one whatasApp number like this: 552799654102, 55119999999',
+  })
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
   async createEventByWhatsApp(@Body() dto: CreateEventWhatsAppDTO) {
     return await this.eventsService.createEventWhastApp(dto);
