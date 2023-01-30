@@ -54,17 +54,25 @@ export class EventsService {
           HttpStatus.NOT_FOUND,
         );
       }
-      await axios.post(
-        `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-text`,
-        {
-          ...dto,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
+      await axios
+        .post(
+          `https://api.z-api.io/instances/${process.env.SUA_INSTANCIA}/token/${process.env.SEU_TOKEN}/send-menssages`,
+          {
+            ...dto,
+            phone: [dto.phone],
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+          },
+        )
+        .then((res) => {
+          return res;
+        })
+        .catch((err) => {
+          return err;
+        });
       await this.eventRepository.save(dto);
-      return { message: 'Event created successfully and send to WhatsApp' };
+      return { message: 'Successfully created a event ans send to WhatsApp' };
     } catch (error) {
       throw new HttpException(
         'Erro in create a event for whatsapp',
