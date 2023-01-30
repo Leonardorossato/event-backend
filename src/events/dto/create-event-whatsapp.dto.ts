@@ -8,6 +8,9 @@ export class CreateEventWhatsAppDTO {
   announcementId!: number;
 
   @ApiProperty({ nullable: false })
+  name!: string;
+
+  @ApiProperty({ nullable: false })
   phone!: string;
 
   @ApiProperty({ nullable: false })
