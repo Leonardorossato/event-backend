@@ -24,15 +24,15 @@ export class EventsService {
     private readonly mailService: MailerService,
     private readonly twilioService: TwilioService,
   ) {}
-  async create(dto: CreateEventDTO) {
-    try {
-      const event = await this.eventRepository.create(dto);
-      await this.eventRepository.save(event);
-      return event;
-    } catch (error) {
-      throw new HttpException('Error creating event', HttpStatus.BAD_REQUEST);
-    }
-  }
+  // async create(dto: CreateEventDTO) {
+  //   try {
+  //     const event = await this.eventRepository.create(dto);
+  //     await this.eventRepository.save(event);
+  //     return event;
+  //   } catch (error) {
+  //     throw new HttpException('Error creating event', HttpStatus.BAD_REQUEST);
+  //   }
+  // }
 
   async createEventWhastApp(dto: CreateEventWhatsAppDTO) {
     try {
