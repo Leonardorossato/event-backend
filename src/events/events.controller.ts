@@ -24,11 +24,11 @@ dotenv.config({ path: './.env' });
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
-  @Post()
-  @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
-  async create(@Body() dto: CreateEventDTO) {
-    return await this.eventsService.create(dto);
-  }
+  // @Post()
+  // @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-create`] })
+  // async create(@Body() dto: CreateEventDTO) {
+  //   return await this.eventsService.create(dto);
+  // }
 
   @Post('event-email')
   @ApiOperation({
