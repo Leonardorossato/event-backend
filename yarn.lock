@@ -5159,6 +5159,11 @@ nest-keycloak-connect@^1.9.1:
   resolved "https://registry.yarnpkg.com/nest-keycloak-connect/-/nest-keycloak-connect-1.9.1.tgz#2e5446915eddd75481c4f815db91bfe720b76f46"
   integrity sha512-IZPq2zEm3MwjX3IqOS607cJMOomF6vg+uKI8D0AipPVN7JzX55Q4B8/3h+OfJWzcfAnpgpeDvkufY/9f4wZUxw==
 
+nestjs-onesignal@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/nestjs-onesignal/-/nestjs-onesignal-2.0.0.tgz#31016a852d64a66b057a781a3dae277cdc5774e2"
+  integrity sha512-bwarYqJMncvAYNd4hqYVK413maqOOgo9UAmYboK9uf0rcIhzXK03XZnE3zV2S/pStlODVvd/7UdipZac1VQnXA==
+
 nestjs-twilio@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/nestjs-twilio/-/nestjs-twilio-3.2.1.tgz#b8d0923854815674a21d40b05512ad70251de158"
