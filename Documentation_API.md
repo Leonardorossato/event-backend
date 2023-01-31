@@ -319,6 +319,7 @@ Like this: "email": "renzo@gmail.com, leorossato@gmail.com"
 {
   "receiverId": 1,
   "announcementId": 1,
+  "name": "Evento",
   "email": "renzo@gmail.com",
   "subject": "opa",
   "html": "<h1> isssssso </h1>"
