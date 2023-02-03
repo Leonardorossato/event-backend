@@ -24,7 +24,7 @@ export class EventsService {
     private readonly mailService: MailerService,
     private readonly twilioService: TwilioService,
   ) {}
-  //  
+  //
 
   async createEventWhastApp(dto: CreateEventWhatsAppDTO) {
     try {
