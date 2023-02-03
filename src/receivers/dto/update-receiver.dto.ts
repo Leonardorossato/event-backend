@@ -1,4 +1,18 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateReceiverDto } from './create-receiver.dto';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateReceiverDto extends PartialType(CreateReceiverDto) {}
+export class UpdateReceiverDto {
+  @ApiProperty({ nullable: false, type: String, minLength: 3, maxLength: 255 })
+  fullName!: string;
+
+  @ApiProperty({ nullable: false, type: String, minLength: 3, maxLength: 255 })
+  email!: string;
+
+  @ApiProperty({ nullable: false, type: String, minLength: 3, maxLength: 255 })
+  whatsapp!: string;
+
+  @ApiProperty({ nullable: false, type: String })
+  cellphone!: string;
+
+  @ApiProperty({ nullable: false, type: String, minLength: 3, maxLength: 255 })
+  message!: string;
+}
