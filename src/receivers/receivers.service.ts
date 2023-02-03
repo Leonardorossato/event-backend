@@ -56,12 +56,12 @@ export class ReceiversService {
   async update(id: number, dto: UpdateReceiverDto) {
     try {
       const receiver = await this.receiverRepository.findOneBy({ id: id });
-      if (!receiver?.id)
+      if (!receiver)
         throw new HttpException(
           `Error finding receiver with id: ${id}`,
           HttpStatus.NOT_FOUND,
         );
-      await this.receiverRepository.update(id, { ...dto });
+      await this.receiverRepository.update(id, dto);
       return { message: 'Successfully updated a receiver' };
     } catch (error) {
       throw new HttpException(
