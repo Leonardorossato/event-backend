@@ -39,10 +39,10 @@ export class ReceiversController {
     return await this.receiversService.findOne(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
   @Roles({ roles: [`realm:${process.env.KEYCLOAK_CLIENT_ID}-api-update`] })
-  async update(@Param('id') id: number, @Body() updateReceiverDto: UpdateReceiverDto) {
-    return await this.receiversService.update(id, updateReceiverDto);
+  async update(@Param('id') id: number, @Body() dto: UpdateReceiverDto) {
+    return await this.receiversService.update(id, dto);
   }
 
   @Delete(':id')
