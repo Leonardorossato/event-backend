@@ -21,7 +21,6 @@
     "migration:gen": "yarn build && yarn typeorm migration:generate"
   },
   "dependencies": {
-    "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/common": "^9.2.1",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.2.1",
@@ -33,10 +32,8 @@
     "class-validator": "^0.14.0",
     "dotenv": "^16.0.3",
     "keycloak-connect": "^20.0.3",
-    "mailersend": "^2.0.4",
     "nest-keycloak-connect": "^1.9.1",
     "nestjs-twilio": "^3.2.1",
-    "nodemailer": "^6.9.0",
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^4.1.1",
@@ -51,7 +48,6 @@
     "@types/express": "^4.17.15",
     "@types/jest": "29.2.6",
     "@types/node": "^18.7.23",
-    "@types/nodemailer": "^6.4.7",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
